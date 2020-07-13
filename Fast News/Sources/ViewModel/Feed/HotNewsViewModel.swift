@@ -13,6 +13,7 @@ struct HotNewsViewModel {
     //MARK: - Properties
     
     var id: String
+    var name: String
     var author: String
     var createdAt: String
     var title: String
@@ -23,6 +24,7 @@ struct HotNewsViewModel {
     
     init(hotNews: HotNews) {
         id = hotNews.id ?? ""
+        name = hotNews.name ?? ""
         author = hotNews.authorFullname ?? ""
         createdAt = hotNews.created?.createdAt ?? ""
         title = hotNews.title ?? ""

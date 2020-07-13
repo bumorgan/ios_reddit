@@ -8,7 +8,8 @@
 import UIKit
 
 protocol FeedViewDelegate {
-    func didTouch(cell: FeedCell, indexPath: IndexPath)
+    func didTouch(indexPath: IndexPath)
+    func loadMore(afterHotNew: String?)
 }
 
 class FeedView: UIView {
@@ -27,6 +28,7 @@ class FeedView: UIView {
     
     func setup(with viewModels: [HotNewsViewModel], and delegate: FeedViewDelegate) {
         tableView.register(UINib(nibName: "FeedCell", bundle: Bundle.main), forCellReuseIdentifier: "FeedCell")
+        tableView.register(UINib(nibName: "FeedLoadMoreCell", bundle: Bundle.main), forCellReuseIdentifier: "FeedLoadMoreCell")
         
         self.delegate = delegate
         tableView.delegate = self
@@ -38,7 +40,7 @@ class FeedView: UIView {
 
 extension FeedView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModels.count
+        return viewModels.count + 1
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -46,20 +48,36 @@ extension FeedView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath) as? FeedCell else { fatalError("Cell is not of type FeedCell!") }
-        
-        cell.setup(hotNewsViewModel: viewModels[indexPath.row])
-        
-        return cell
+        var tableViewCell: UITableViewCell!
+        if (indexPath.row >= viewModels.count) {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "FeedLoadMoreCell", for: indexPath) as? FeedLoadMoreCell {
+                tableViewCell = cell
+            } else { fatalError("Cell is not of type FeedLoadMoreCell!") }
+        } else {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath) as? FeedCell {
+                tableViewCell = cell
+                cell.setup(hotNewsViewModel: viewModels[indexPath.row])
+            } else { fatalError("Cell is not of type FeedCell!") }
+                
+        }
+        return tableViewCell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if (indexPath.row >= viewModels.count) {
+            return 50.0
+        }
         return 260.0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? FeedCell else { fatalError("Cell is not of type FeedCell!") }
+        if let _ = tableView.cellForRow(at: indexPath) as? FeedCell {
+            delegate?.didTouch(indexPath: indexPath)
+        }
         
-        delegate?.didTouch(cell: cell, indexPath: indexPath)
+        if let _ = tableView.cellForRow(at: indexPath) as? FeedLoadMoreCell {
+            delegate?.loadMore(afterHotNew: viewModels.last?.name)
+        }
+        
     }
 }

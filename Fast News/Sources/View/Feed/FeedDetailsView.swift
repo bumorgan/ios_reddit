@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol FeedDetailsViewDelegate {
+    func didTouch(indexPath: IndexPath)
+}
+
 class FeedDetailsView: UIView {
     
     //MARK: - Properties
@@ -17,11 +21,11 @@ class FeedDetailsView: UIView {
             tableView.reloadData()
         }
     }
-    var delegate: FeedViewDelegate?
+    var delegate: FeedDetailsViewDelegate?
     
     //MARK: - Public Methods
     
-    func setup(with viewModels: [TypeProtocol], and delegate: FeedViewDelegate) {
+    func setup(with viewModels: [TypeProtocol], and delegate: FeedDetailsViewDelegate) {
         tableView.estimatedRowHeight = 400
         tableView.rowHeight = UITableView.automaticDimension
         
@@ -78,9 +82,9 @@ extension FeedDetailsView: UITableViewDelegate, UITableViewDataSource {
         
         switch viewModel.type {
         case .hotNews:
-            guard let cell = tableView.cellForRow(at: indexPath) as? FeedCell else { fatalError("Cell is not of type FeedCell!") }
+            guard let _ = tableView.cellForRow(at: indexPath) as? FeedCell else { fatalError("Cell is not of type FeedCell!") }
             
-            delegate?.didTouch(cell: cell, indexPath: indexPath)
+            delegate?.didTouch(indexPath: indexPath)
         case .comment:
             return
         }

@@ -54,8 +54,8 @@ class FeedDetailsViewController: UIViewController {
     }
 }
 
-extension FeedDetailsViewController: FeedViewDelegate {
-    func didTouch(cell: FeedCell, indexPath: IndexPath) {
+extension FeedDetailsViewController: FeedDetailsViewDelegate {
+    func didTouch(indexPath: IndexPath) {
         guard self.mainView.viewModels[indexPath.row].type == .hotNews,
             let viewModel = self.mainView.viewModels[indexPath.row] as? HotNewsViewModel else {
                 return

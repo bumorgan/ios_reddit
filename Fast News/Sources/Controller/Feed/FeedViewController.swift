@@ -18,9 +18,8 @@ class FeedViewController: UIViewController {
     
     var hotNews: [HotNews] = [HotNews]() {
         didSet {
-            var viewModels: [HotNewsViewModel] = [HotNewsViewModel]()
-            _ = hotNews.map { (news) in
-                viewModels.append(HotNewsViewModel(hotNews: news))
+            let viewModels = hotNews.map { (news) in
+                HotNewsViewModel(hotNews: news)
             }
             
             self.mainView.setup(with: viewModels, and: self)
@@ -36,19 +35,8 @@ class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationItem.title = "Fast News"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
-        HotNewsProvider.shared.hotNews { (completion) in
-            do {
-                let hotNews = try completion()
-                
-                self.hotNews = hotNews
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
+        fetchHotNews()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -57,10 +45,26 @@ class FeedViewController: UIViewController {
         
         detailViewController.hotNewsViewModel = hotNewsViewModel
     }
+    
+    private func fetchHotNews(quantity: Int? = nil, after: String? = nil) {
+        HotNewsProvider.shared.hotNews(quantity: quantity, after: after) { (completion) in
+            do {
+                let loadedHotNew = try completion()
+                self.hotNews.append(contentsOf: loadedHotNew)
+            } catch {
+                // TODO: Implement error treatment
+                print(error.localizedDescription)
+            }
+        }
+    }
 }
 
 extension FeedViewController: FeedViewDelegate {
-    func didTouch(cell: FeedCell, indexPath: IndexPath) {
+    func didTouch(indexPath: IndexPath) {
         self.performSegue(withIdentifier: kToDetails, sender: self.mainView.viewModels[indexPath.row])
+    }
+    
+    func loadMore(afterHotNew hotNewFullName: String?) {
+        fetchHotNews(after: hotNewFullName)
     }
 }

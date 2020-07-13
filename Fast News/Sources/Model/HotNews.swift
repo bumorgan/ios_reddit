@@ -10,6 +10,7 @@ import Foundation
 struct HotNews: Codable {
     var id: String?
     var title: String?
+    var name: String?
     var preview: Preview?
     var url: String?
     var created: Int?
@@ -20,7 +21,7 @@ struct HotNews: Codable {
     var numComments: Int?
     
     private enum CodingKeys: String, CodingKey {
-        case id, title, preview, url, created, ups, downs, score
+        case id, title, preview, url, created, ups, downs, score, name
         case authorFullname = "author_fullname"
         case numComments = "num_comments"
     }

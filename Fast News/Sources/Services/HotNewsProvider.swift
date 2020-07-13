@@ -33,12 +33,12 @@ class HotNewsProvider {
     
     //MARK: - Public Methods
     
-    func hotNews(completion: @escaping HotNewsCallback) {
+    func hotNews(quantity: Int? = nil, after: String? = nil, completion: @escaping HotNewsCallback) {
         let alamofire = APIProvider.shared.sessionManager
         let requestString = APIProvider.shared.baseURL() + kHotNewsEndpoint
         
-        let parameters: Parameters = [ kLimitKey : kLimitValue,
-                                       kAfterKey : kAfterValue ]
+        let parameters: Parameters = [ kLimitKey : quantity ?? kLimitValue,
+                                       kAfterKey : after ?? kAfterValue ]
         
         do {
             let requestURL = try requestString.asURL()

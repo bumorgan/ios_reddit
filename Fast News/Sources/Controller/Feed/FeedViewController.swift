@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class FeedViewController: UIViewController {
+    let cacheDataSource = CacheDataSource()
     
     //MARK: - Constants
     
@@ -21,7 +22,7 @@ class FeedViewController: UIViewController {
             let viewModels = hotNews.map { (news) in
                 HotNewsViewModel(hotNews: news)
             }
-            
+            cacheDataSource.upsertHotNews(hotNews: hotNews)
             self.mainView.setup(with: viewModels, and: self)
         }
     }
@@ -58,8 +59,9 @@ extension FeedViewController: FeedViewDelegate {
                 let loadedHotNew = try completion()
                 self.hotNews.append(contentsOf: loadedHotNew)
             } catch {
-                // TODO: Implement error treatment
-                print(error.localizedDescription)
+                if let cachedHotNew = self.cacheDataSource.getHotNews() {
+                    self.hotNews = cachedHotNew
+                }
             }
         }
     }

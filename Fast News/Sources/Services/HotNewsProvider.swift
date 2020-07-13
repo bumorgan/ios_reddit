@@ -25,7 +25,7 @@ class HotNewsProvider {
     private let kLimitKey = "limit"
     private let kLimitValue = 5
     private let kAfterKey = "after"
-    private let kAfterValue = ""
+    private var kAfterValue = ""
     
     //MARK: - Singleton
     
@@ -33,12 +33,12 @@ class HotNewsProvider {
     
     //MARK: - Public Methods
     
-    func hotNews(quantity: Int? = nil, after: String? = nil, completion: @escaping HotNewsCallback) {
+    func hotNews(completion: @escaping HotNewsCallback) {
         let alamofire = APIProvider.shared.sessionManager
         let requestString = APIProvider.shared.baseURL() + kHotNewsEndpoint
         
-        let parameters: Parameters = [ kLimitKey : quantity ?? kLimitValue,
-                                       kAfterKey : after ?? kAfterValue ]
+        let parameters: Parameters = [ kLimitKey : kLimitValue,
+                                       kAfterKey : kAfterValue ]
         
         do {
             let requestURL = try requestString.asURL()
@@ -68,6 +68,10 @@ class HotNewsProvider {
                         }
                         
                         hotNewsArray.append(hotNews)
+                    }
+                    
+                    if let after = hotNewsDict["data"]?["after"] as? String {
+                        self.kAfterValue = after
                     }
                     
                     completion { return hotNewsArray }

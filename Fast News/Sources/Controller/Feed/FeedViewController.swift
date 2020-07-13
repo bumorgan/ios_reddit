@@ -45,9 +45,15 @@ class FeedViewController: UIViewController {
         
         detailViewController.hotNewsViewModel = hotNewsViewModel
     }
+}
+
+extension FeedViewController: FeedViewDelegate {
+    func didTouch(indexPath: IndexPath) {
+        self.performSegue(withIdentifier: kToDetails, sender: self.mainView.viewModels[indexPath.row])
+    }
     
-    private func fetchHotNews(quantity: Int? = nil, after: String? = nil) {
-        HotNewsProvider.shared.hotNews(quantity: quantity, after: after) { (completion) in
+    func fetchHotNews() {
+        HotNewsProvider.shared.hotNews() { (completion) in
             do {
                 let loadedHotNew = try completion()
                 self.hotNews.append(contentsOf: loadedHotNew)
@@ -56,15 +62,5 @@ class FeedViewController: UIViewController {
                 print(error.localizedDescription)
             }
         }
-    }
-}
-
-extension FeedViewController: FeedViewDelegate {
-    func didTouch(indexPath: IndexPath) {
-        self.performSegue(withIdentifier: kToDetails, sender: self.mainView.viewModels[indexPath.row])
-    }
-    
-    func loadMore(afterHotNew hotNewFullName: String?) {
-        fetchHotNews(after: hotNewFullName)
     }
 }

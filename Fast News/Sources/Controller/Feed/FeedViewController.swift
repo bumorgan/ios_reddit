@@ -36,6 +36,8 @@ class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.displayLoading(onView: self.view)
+        view.accessibilityIdentifier = "feedView"
         navigationItem.title = "Fast News"
         fetchHotNews()
     }
@@ -63,6 +65,7 @@ extension FeedViewController: FeedViewDelegate {
                     self.hotNews = cachedHotNew
                 }
             }
+            self.removeLoading()
         }
     }
 }

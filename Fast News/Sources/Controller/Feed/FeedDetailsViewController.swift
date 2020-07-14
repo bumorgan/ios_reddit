@@ -39,8 +39,9 @@ class FeedDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationItem.largeTitleDisplayMode = .never
+        
+        self.displayLoading(onView: self.view)
         
         HotNewsProvider.shared.hotNewsComments(id: hotNewsViewModel?.id ?? "") { (completion) in
             do {
@@ -50,6 +51,7 @@ class FeedDetailsViewController: UIViewController {
             } catch {
                 print(error.localizedDescription)
             }
+            self.removeLoading()
         }
     }
 }

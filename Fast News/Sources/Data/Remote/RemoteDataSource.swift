@@ -12,11 +12,11 @@ import RxSwift
 class RemoteDataSource {
     let provider = HotNewsProvider()
     
-    func getHotNews() -> Single<[HotNews]> {
+    func getHotNews() -> Single<[HotNewsRM]> {
         return provider.hotNews()
     }
     
-    func getComments(id: String) -> Single<[Comment]> {
+    func getComments(id: String) -> Single<[CommentRM]> {
         return provider.hotNewsComments(id: id)
     }
 }

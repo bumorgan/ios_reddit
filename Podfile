@@ -9,6 +9,7 @@ target 'Fast News' do
     pod 'Alamofire'
     pod 'RxSwift', '~> 5'
     pod 'RxCocoa', '~> 5'
+    pod 'SwiftyUserDefaults', '~> 5.0'
 
   target 'Fast NewsTests' do
     inherit! :search_paths

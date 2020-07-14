@@ -7,16 +7,22 @@
 //
 
 import Foundation
+import RxSwift
+import SwiftyUserDefaults
 
 class CacheDataSource {
-    private let cache = NSCache<NSString, NSArray>()
-    private let hotNewKey = NSString("hotNew")
+    private let hotNewsKey = DefaultsKey<[HotNewsCM]?>("hotNewsKey")
     
-    func getHotNews() -> [HotNews]? {
-        return cache.object(forKey: hotNewKey) as? [HotNews]
+    func upsertHotNews(hotNews: [HotNewsCM]) -> Completable {
+        return Completable.fromAction {
+            Defaults[key: self.hotNewsKey] = hotNews
+        }
     }
-    
-    func upsertHotNews(hotNews: [HotNews]) {
-        cache.setObject(hotNews as NSArray, forKey: hotNewKey)
+
+    func getHotNews() -> Single<[HotNewsCM]?> {
+        return Observable.create({ (emitter: AnyObserver<[HotNewsCM]?>) -> Disposable in
+            emitter.onNext(Defaults[key: self.hotNewsKey])
+            return Disposables.create()
+        }).take(1).asSingle()
     }
 }

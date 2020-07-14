@@ -1,5 +1,5 @@
 //
-//  News.swift
+//  HotNewsRM.swift
 //  Fast News
 //
 //  Copyright © 2019 Lucas Moreton. All rights reserved.
@@ -7,18 +7,18 @@
 
 import Foundation
 
-struct HotNews: Codable {
-    var id: String?
-    var title: String?
-    var name: String?
-    var preview: Preview?
-    var url: String?
-    var created: Int?
-    var ups: Int?
-    var downs: Int?
-    var score: Int?
-    var authorFullname: String?
-    var numComments: Int?
+struct HotNewsRM: Codable {
+    let id: String?
+    let title: String?
+    let name: String?
+    let preview: PreviewRM?
+    let url: String?
+    let created: Int?
+    let ups: Int?
+    let downs: Int?
+    let score: Int?
+    let authorFullname: String?
+    let numComments: Int?
     
     private enum CodingKeys: String, CodingKey {
         case id, title, preview, url, created, ups, downs, score, name

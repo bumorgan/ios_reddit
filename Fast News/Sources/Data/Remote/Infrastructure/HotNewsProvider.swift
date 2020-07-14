@@ -30,8 +30,8 @@ class HotNewsProvider {
     
     //MARK: - Public Methods
     
-    func hotNews() -> Single<[HotNews]> {
-        return Single<[HotNews]>.create { (single) -> Disposable in
+    func hotNews() -> Single<[HotNewsRM]> {
+        return Single<[HotNewsRM]>.create { (single) -> Disposable in
             let alamofire = APIProvider.shared.sessionManager
             let requestString = APIProvider.shared.baseURL() + self.kHotNewsEndpoint
             
@@ -50,18 +50,18 @@ class HotNewsProvider {
                             
                             guard let hotNewsDict = response.result.value as? [String: AnyObject],
                                   let dictArray = hotNewsDict["data"]?["children"] as? [[String: AnyObject]] else {
-                                single(.success([HotNews]()))
+                                single(.success([HotNewsRM]()))
                                 return
                             }
                             
-                            var hotNewsArray: [HotNews] = [HotNews]()
+                            var hotNewsArray: [HotNewsRM] = [HotNewsRM]()
                             
                             for hotNews in dictArray {
                                 let data = hotNews["data"]
                                 
                                 guard let jsonData = try? JSONSerialization.data(withJSONObject: data as Any, options: .prettyPrinted),
-                                      let hotNews = try? JSONDecoder().decode(HotNews.self, from: jsonData) else {
-                                    single(.success([HotNews]()))
+                                      let hotNews = try? JSONDecoder().decode(HotNewsRM.self, from: jsonData) else {
+                                    single(.success([HotNewsRM]()))
                                     return
                                 }
                                 
@@ -86,8 +86,8 @@ class HotNewsProvider {
         }
     }
     
-    func hotNewsComments(id: String) -> Single<[Comment]> {
-        return Single<[Comment]>.create { (single) -> Disposable in
+    func hotNewsComments(id: String) -> Single<[CommentRM]> {
+        return Single<[CommentRM]>.create { (single) -> Disposable in
             let alamofire = APIProvider.shared.sessionManager
             let endpoint = self.kCommentsEndpoint.replacingOccurrences(of: "@", with: id)
             let requestString = APIProvider.shared.baseURL() + endpoint
@@ -104,18 +104,18 @@ class HotNewsProvider {
                         
                         guard let hotNewsDict = response.result.value as? [[String: AnyObject]],
                             let dictArray = hotNewsDict.last?["data"]?["children"] as? [[String: AnyObject]] else {
-                                single(.success([Comment]()))
+                                single(.success([CommentRM]()))
                                 return
                         }
                         
-                        var commentsArray: [Comment] = [Comment]()
+                        var commentsArray: [CommentRM] = [CommentRM]()
                         
                         for comment in dictArray {
                             let data = comment["data"]
                             
                             guard let jsonData = try? JSONSerialization.data(withJSONObject: data as Any, options: .prettyPrinted),
-                                let comment = try? JSONDecoder().decode(Comment.self, from: jsonData) else {
-                                    single(.success([Comment]()))
+                                let comment = try? JSONDecoder().decode(CommentRM.self, from: jsonData) else {
+                                    single(.success([CommentRM]()))
                                     return
                             }
                             

@@ -1,5 +1,5 @@
 //
-//  Comment.swift
+//  CommentRM.swift
 //  Fast News
 //
 //  Copyright © 2019 Lucas Moreton. All rights reserved.
@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct Comment: Codable {
-    var created: Int?
-    var ups: Int?
-    var downs: Int?
-    var body: String?
-    var authorFullname: String?
+struct CommentRM: Codable {
+    let created: Int?
+    let ups: Int?
+    let downs: Int?
+    let body: String?
+    let authorFullname: String?
     
     private enum CodingKeys: String, CodingKey {
         case created, ups, downs, body

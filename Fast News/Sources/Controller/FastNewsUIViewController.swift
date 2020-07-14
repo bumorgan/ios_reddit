@@ -1,5 +1,5 @@
 //
-//  UIViewController+Ext.swift
+//  FastNewsUIViewController.swift
 //  Fast News
 //
 //  Created by Bruno Morgan on 14/07/20.

@@ -13,9 +13,13 @@ import SwiftyUserDefaults
 class CacheDataSource {
     private let hotNewsKey = DefaultsKey<[HotNewsCM]?>("hotNewsKey")
     
-    func upsertHotNews(hotNews: [HotNewsCM]) -> Completable {
+    func upsertHotNews(hotNews: [HotNewsCM], resetCache: Bool) -> Completable {
         return Completable.fromAction {
-            Defaults[key: self.hotNewsKey] = hotNews
+            if resetCache {
+                Defaults[key: self.hotNewsKey] = hotNews
+            } else {
+                Defaults[key: self.hotNewsKey]?.append(contentsOf: hotNews)
+            }
         }
     }
 

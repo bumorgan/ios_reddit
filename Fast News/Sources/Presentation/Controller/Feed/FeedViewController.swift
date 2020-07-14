@@ -38,7 +38,7 @@ class FeedViewController: FastNewsUIViewController {
         super.viewDidLoad()
         view.accessibilityIdentifier = "feedView"
         navigationItem.title = "Fast News"
-        fetchHotNews()
+        fetchHotNews(isFirstPage: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -46,6 +46,21 @@ class FeedViewController: FastNewsUIViewController {
         guard let detailViewController = segue.destination as? FeedDetailsViewController else { return }
         
         detailViewController.hotNewsViewModel = hotNewsViewModel
+    }
+    
+    private func fetchHotNews(isFirstPage: Bool) {
+        if (isFirstPage) {
+            self.displayLoading()
+        }
+        repository.getHotNews(isFirstPage: isFirstPage).subscribe() { event in
+            switch event {
+                case .success(let loadedHotNews):
+                    self.removeLoading()
+                    self.hotNews.append(contentsOf: loadedHotNews)
+                case .error(let error):
+                    print("Error: ", error)
+            }
+        }.disposed(by: disposeBag)
     }
 }
 
@@ -62,16 +77,7 @@ extension FeedViewController: FeedViewDelegate {
         self.performSegue(withIdentifier: kToDetails, sender: self.mainView.viewModels[indexPath.row])
     }
     
-    func fetchHotNews() {
-        self.displayLoading()
-        repository.getHotNews().subscribe() { event in
-            switch event {
-                case .success(let loadedHotNews):
-                    self.removeLoading()
-                    self.hotNews.append(contentsOf: loadedHotNews)
-                case .error(let error):
-                    print("Error: ", error)
-            }
-        }.disposed(by: disposeBag)
+    func fetchMoreHotNews() {
+        self.fetchHotNews(isFirstPage: false)
     }
 }

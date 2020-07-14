@@ -11,7 +11,7 @@ import RxCocoa
 
 protocol FeedViewDelegate {
     func didTouch(indexPath: IndexPath)
-    func fetchHotNews()
+    func fetchMoreHotNews()
     func share(indexPath: IndexPath)
 }
 
@@ -78,6 +78,6 @@ extension FeedView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-        delegate?.fetchHotNews()
+        delegate?.fetchMoreHotNews()
     }
 }

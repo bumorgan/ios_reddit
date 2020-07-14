@@ -241,6 +241,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		34B1E43524BE5F03007FD9DC /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				3486559E24BDF69A00FB935B /* FastNewsUIViewController.swift */,
+				34B1E41424BE251E007FD9DC /* FastNewsUIView.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		34C3E07824BD186A00FDC01D /* Cache */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,8 +369,7 @@
 		E789E8BB232F47F30091660E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				3486559E24BDF69A00FB935B /* FastNewsUIViewController.swift */,
-				34B1E41424BE251E007FD9DC /* FastNewsUIView.swift */,
+				34B1E43524BE5F03007FD9DC /* Utils */,
 				E789E8BF232F48190091660E /* Feed */,
 			);
 			path = Controller;

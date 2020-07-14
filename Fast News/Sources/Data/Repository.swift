@@ -13,15 +13,18 @@ class Repository {
     let remoteDataSource = RemoteDataSource()
     let cacheDataSource = CacheDataSource()
     
-    func getHotNews() -> Single<[HotNews]> {
+    func getHotNews(isFirstPage: Bool) -> Single<[HotNews]> {
         return remoteDataSource.getHotNews()
             .flatMap { rmHotNews in
                 let cmHotNews = rmHotNews.map{ $0.toCacheModel() }
-                return self.cacheDataSource.upsertHotNews(hotNews: cmHotNews).andThen(Single.just(cmHotNews))
+                return self.cacheDataSource.upsertHotNews(hotNews: cmHotNews, resetCache: isFirstPage).andThen(Single.just(cmHotNews))
             }.catchError { error in self.cacheDataSource.getHotNews()
                 .map { (cmHotNews: [HotNewsCM]?) -> [HotNewsCM] in
-                    guard let hotNews = cmHotNews else { throw error }
-                    return hotNews
+                    if let hotNews = cmHotNews, isFirstPage {
+                        return hotNews
+                    } else {
+                        throw error
+                    }
                 }
             }.map { $0.map{ $0.toDomainModel() } }
     }

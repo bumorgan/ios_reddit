@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class FeedViewController: UIViewController {
+class FeedViewController: FastNewsUIViewController {
     let cacheDataSource = CacheDataSource()
     
     //MARK: - Constants
@@ -36,7 +36,7 @@ class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.displayLoading(onView: self.view)
+        self.displayLoading()
         view.accessibilityIdentifier = "feedView"
         navigationItem.title = "Fast News"
         fetchHotNews()

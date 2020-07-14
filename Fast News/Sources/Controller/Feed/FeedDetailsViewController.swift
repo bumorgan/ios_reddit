@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FeedDetailsViewController: UIViewController {
+class FeedDetailsViewController: FastNewsUIViewController {
     
     //MARK: - Properties
     
@@ -41,7 +41,7 @@ class FeedDetailsViewController: UIViewController {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
         
-        self.displayLoading(onView: self.view)
+        self.displayLoading()
         
         HotNewsProvider.shared.hotNewsComments(id: hotNewsViewModel?.id ?? "") { (completion) in
             do {

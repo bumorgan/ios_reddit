@@ -18,6 +18,7 @@ class FeedCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var commentsLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var shareButton: UIButton!
     
     //MARK: - Public Methods
     

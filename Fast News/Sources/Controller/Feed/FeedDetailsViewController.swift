@@ -57,11 +57,19 @@ class FeedDetailsViewController: FastNewsUIViewController {
 }
 
 extension FeedDetailsViewController: FeedDetailsViewDelegate {
+    func share(indexPath: IndexPath) {
+        guard self.mainView.viewModels[indexPath.row].type == .hotNews,
+            let viewModel = self.mainView.viewModels[indexPath.row] as? HotNewsViewModel else { return }
+        
+        if let url = NSURL(string: viewModel.url) {
+            let vc = UIActivityViewController(activityItems: [viewModel.title, url], applicationActivities: nil)
+            present(vc, animated: true)
+        }
+    }
+    
     func didTouch(indexPath: IndexPath) {
         guard self.mainView.viewModels[indexPath.row].type == .hotNews,
-            let viewModel = self.mainView.viewModels[indexPath.row] as? HotNewsViewModel else {
-                return
-        }
+            let viewModel = self.mainView.viewModels[indexPath.row] as? HotNewsViewModel else { return }
         
         if let url = URL(string: viewModel.url) {
             UIApplication.shared.open(url)

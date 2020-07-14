@@ -9,9 +9,10 @@ import UIKit
 
 protocol FeedDetailsViewDelegate {
     func didTouch(indexPath: IndexPath)
+    func share(indexPath: IndexPath)
 }
 
-class FeedDetailsView: UIView {
+class FeedDetailsView: DisposableUIView {
     
     //MARK: - Properties
     
@@ -57,6 +58,9 @@ extension FeedDetailsView: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath) as? FeedCell else { fatalError("Cell is not of type FeedCell!") }
             
             cell.setup(viewModel: viewModel)
+            cell.shareButton.rx.tap.bind { _ in
+                self.delegate?.share(indexPath: indexPath)
+            }.disposed(by: disposeBag)
             
             return cell
         case .comment:

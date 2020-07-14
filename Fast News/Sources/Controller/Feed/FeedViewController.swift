@@ -9,13 +9,12 @@ import Foundation
 import UIKit
 
 class FeedViewController: FastNewsUIViewController {
-    let cacheDataSource = CacheDataSource()
-    
     //MARK: - Constants
     
     let kToDetails: String = "toDetails"
     
     //MARK: - Properties
+    let cacheDataSource = CacheDataSource()
     
     var hotNews: [HotNews] = [HotNews]() {
         didSet {
@@ -51,6 +50,14 @@ class FeedViewController: FastNewsUIViewController {
 }
 
 extension FeedViewController: FeedViewDelegate {
+    func share(indexPath: IndexPath) {
+        let viewModel = self.mainView.viewModels[indexPath.row]
+        if let url = NSURL(string: viewModel.url) {
+            let vc = UIActivityViewController(activityItems: [viewModel.title, url], applicationActivities: nil)
+            present(vc, animated: true)
+        }
+    }
+    
     func didTouch(indexPath: IndexPath) {
         self.performSegue(withIdentifier: kToDetails, sender: self.mainView.viewModels[indexPath.row])
     }

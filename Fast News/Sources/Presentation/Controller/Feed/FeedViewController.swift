@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import RxSwift
 
 class FeedViewController: FastNewsUIViewController {
     //MARK: - Constants
@@ -14,14 +15,14 @@ class FeedViewController: FastNewsUIViewController {
     let kToDetails: String = "toDetails"
     
     //MARK: - Properties
-    let cacheDataSource = CacheDataSource()
+    
+    let repository = Repository()
     
     var hotNews: [HotNews] = [HotNews]() {
         didSet {
             let viewModels = hotNews.map { (news) in
                 HotNewsViewModel(hotNews: news)
             }
-            cacheDataSource.upsertHotNews(hotNews: hotNews)
             self.mainView.setup(with: viewModels, and: self)
         }
     }
@@ -35,7 +36,6 @@ class FeedViewController: FastNewsUIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.displayLoading()
         view.accessibilityIdentifier = "feedView"
         navigationItem.title = "Fast News"
         fetchHotNews()
@@ -63,16 +63,15 @@ extension FeedViewController: FeedViewDelegate {
     }
     
     func fetchHotNews() {
-        HotNewsProvider.shared.hotNews() { (completion) in
-            do {
-                let loadedHotNew = try completion()
-                self.hotNews.append(contentsOf: loadedHotNew)
-            } catch {
-                if let cachedHotNew = self.cacheDataSource.getHotNews() {
-                    self.hotNews = cachedHotNew
-                }
+        self.displayLoading()
+        repository.getHotNews().subscribe() { event in
+            switch event {
+                case .success(let loadedHotNews):
+                    self.removeLoading()
+                    self.hotNews.append(contentsOf: loadedHotNews)
+                case .error(let error):
+                    print("Error: ", error)
             }
-            self.removeLoading()
-        }
+        }.disposed(by: disposeBag)
     }
 }

@@ -12,7 +12,7 @@ protocol FeedDetailsViewDelegate {
     func share(indexPath: IndexPath)
 }
 
-class FeedDetailsView: DisposableUIView {
+class FeedDetailsView: FastNewsUIView {
     
     //MARK: - Properties
     

@@ -8,8 +8,13 @@
 
 import Foundation
 import UIKit
+import RxSwift
 
 class FastNewsUIViewController: UIViewController {
+    
+    //MARK: - Properties
+    
+    let disposeBag = DisposeBag()
     var loading: UIView?
     
     func displayLoading() {

@@ -10,6 +10,7 @@ import UIKit
 class FeedDetailsViewController: FastNewsUIViewController {
     
     //MARK: - Properties
+    let repository = Repository()
     
     var hotNewsViewModel: HotNewsViewModel?
     
@@ -40,19 +41,21 @@ class FeedDetailsViewController: FastNewsUIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
-        
+        fetchComments(id: hotNewsViewModel?.id ?? "")
+    }
+    
+    private func fetchComments(id: String) {
         self.displayLoading()
         
-        HotNewsProvider.shared.hotNewsComments(id: hotNewsViewModel?.id ?? "") { (completion) in
-            do {
-                let comments = try completion()
-                
-                self.comments = comments
-            } catch {
-                print(error.localizedDescription)
+        repository.getComments(id: id).subscribe() { event in
+            switch event {
+                case .success(let comments):
+                    self.removeLoading()
+                    self.comments = comments
+                case .error(let error):
+                    print("Error: ", error)
             }
-            self.removeLoading()
-        }
+        }.disposed(by: disposeBag)
     }
 }
 

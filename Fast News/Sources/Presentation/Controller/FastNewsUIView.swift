@@ -1,5 +1,5 @@
 //
-//  DisposableUIView.swift
+//  FastNewsUIView.swift
 //  Fast News
 //
 //  Created by Bruno Morgan on 14/07/20.
@@ -8,6 +8,6 @@
 
 import RxSwift
 
-class DisposableUIView: UIView {
+class FastNewsUIView: UIView {
     let disposeBag = DisposeBag()
 }

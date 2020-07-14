@@ -15,7 +15,7 @@ protocol FeedViewDelegate {
     func share(indexPath: IndexPath)
 }
 
-class FeedView: DisposableUIView {
+class FeedView: FastNewsUIView {
     
     //MARK: - Properties
     

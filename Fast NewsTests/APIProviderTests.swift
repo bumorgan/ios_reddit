@@ -10,9 +10,7 @@ import XCTest
 @testable import Fast_News
 
 class APIProviderTests: XCTestCase {
-    
-    func testIfAPIProviderIsReturningBaseUrl() {
+    func testAPIProviderIsReturningBaseUrl() {
         XCTAssert(APIProvider.shared.baseURL() == "https://www.reddit.com")
     }
-
 }

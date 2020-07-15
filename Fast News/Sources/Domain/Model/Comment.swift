@@ -14,12 +14,4 @@ struct Comment {
     let downs: Int?
     let body: String?
     let authorFullname: String?
-    
-//    init(created: Int?, ups: Int?, downs: Int?, body: String?, authorFullname: String?) {
-//        self.created = created
-//        self.ups = ups
-//        self.downs = downs
-//        self.body = body
-//        self.authorFullname = authorFullname
-//    }
 }

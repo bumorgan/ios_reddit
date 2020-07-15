@@ -20,18 +20,4 @@ struct HotNews {
     let score: Int?
     let authorFullname: String?
     let numComments: Int?
-    
-    init(id: String?, title: String?, name: String?, previewUrl: String?, url: String?, created: Int?, ups: Int?, downs: Int?, score: Int?, authorFullname: String?, numComments: Int?) {
-        self.id = id
-        self.title = title
-        self.name = name
-        self.previewUrl = previewUrl
-        self.url = url
-        self.created = created
-        self.ups = ups
-        self.downs = downs
-        self.score = score
-        self.authorFullname = authorFullname
-        self.numComments = numComments
-    }
 }

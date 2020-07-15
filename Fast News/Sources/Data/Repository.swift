@@ -11,8 +11,13 @@ import RxSwift
 
 class Repository {
     //MARK: - Properties
-    private let remoteDataSource = RemoteDataSource()
-    private let cacheDataSource = CacheDataSource()
+    private var remoteDataSource: RemoteDataSource
+    private var cacheDataSource: CacheDataSource
+    
+    init(remoteDataSource: RemoteDataSource, cacheDataSource: CacheDataSource) {
+        self.remoteDataSource = remoteDataSource
+        self.cacheDataSource = cacheDataSource
+    }
     
     func getHotNews(isFirstPage: Bool) -> Single<[HotNews]> {
         return remoteDataSource.getHotNews()

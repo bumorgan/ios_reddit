@@ -21,4 +21,8 @@ class FeedViewControllerTests: XCTestCase {
         sut = nil
         super.tearDown()
     }
+    
+    func testHotNewsArrayIsEmptyWhenInitialized() {
+        XCTAssert(sut.hotNews.isEmpty)
+    }
 }

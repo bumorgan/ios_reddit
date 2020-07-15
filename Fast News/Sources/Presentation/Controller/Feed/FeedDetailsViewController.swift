@@ -10,7 +10,8 @@ import UIKit
 class FeedDetailsViewController: FastNewsUIViewController {
     
     //MARK: - Properties
-    let repository = Repository()
+    let repository = Repository(remoteDataSource: RemoteDataSource(),
+                                cacheDataSource: CacheDataSource())
     
     var hotNewsViewModel: HotNewsViewModel?
     

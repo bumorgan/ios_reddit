@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3475606824BF142800E53270 /* FeedViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475606724BF142800E53270 /* FeedViewControllerTests.swift */; };
+		3475606D24BF235000E53270 /* RepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475606C24BF235000E53270 /* RepositoryTests.swift */; };
+		3475607024BF247000E53270 /* RemoteDataSourceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475606F24BF247000E53270 /* RemoteDataSourceMock.swift */; };
+		3475607224BF247A00E53270 /* CacheDataSourceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475607124BF247A00E53270 /* CacheDataSourceMock.swift */; };
 		3486559D24BDF1B500FB935B /* XCUIApplication+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3486559C24BDF1B500FB935B /* XCUIApplication+Ext.swift */; };
 		3486559F24BDF69A00FB935B /* FastNewsUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3486559E24BDF69A00FB935B /* FastNewsUIViewController.swift */; };
 		34B1E41324BE061F007FD9DC /* APIProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B1E41224BE061F007FD9DC /* APIProviderTests.swift */; };
@@ -72,6 +75,9 @@
 
 /* Begin PBXFileReference section */
 		3475606724BF142800E53270 /* FeedViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewControllerTests.swift; sourceTree = "<group>"; };
+		3475606C24BF235000E53270 /* RepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryTests.swift; sourceTree = "<group>"; };
+		3475606F24BF247000E53270 /* RemoteDataSourceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataSourceMock.swift; sourceTree = "<group>"; };
+		3475607124BF247A00E53270 /* CacheDataSourceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheDataSourceMock.swift; sourceTree = "<group>"; };
 		3486559C24BDF1B500FB935B /* XCUIApplication+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIApplication+Ext.swift"; sourceTree = "<group>"; };
 		3486559E24BDF69A00FB935B /* FastNewsUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastNewsUIViewController.swift; sourceTree = "<group>"; };
 		34B1E41224BE061F007FD9DC /* APIProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIProviderTests.swift; sourceTree = "<group>"; };
@@ -157,6 +163,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3475606E24BF245E00E53270 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				3475606F24BF247000E53270 /* RemoteDataSourceMock.swift */,
+				3475607124BF247A00E53270 /* CacheDataSourceMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		3486559B24BDF19A00FB935B /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -320,8 +335,10 @@
 		E789E89E232F47A50091660E /* Fast NewsTests */ = {
 			isa = PBXGroup;
 			children = (
+				3475606E24BF245E00E53270 /* Mocks */,
 				34B1E41224BE061F007FD9DC /* APIProviderTests.swift */,
 				3475606724BF142800E53270 /* FeedViewControllerTests.swift */,
+				3475606C24BF235000E53270 /* RepositoryTests.swift */,
 				E789E8A1232F47A50091660E /* Info.plist */,
 			);
 			path = "Fast NewsTests";
@@ -706,7 +723,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3475606824BF142800E53270 /* FeedViewControllerTests.swift in Sources */,
+				3475607224BF247A00E53270 /* CacheDataSourceMock.swift in Sources */,
 				34B1E41324BE061F007FD9DC /* APIProviderTests.swift in Sources */,
+				3475607024BF247000E53270 /* RemoteDataSourceMock.swift in Sources */,
+				3475606D24BF235000E53270 /* RepositoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

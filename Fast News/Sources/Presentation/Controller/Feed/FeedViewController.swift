@@ -16,7 +16,8 @@ class FeedViewController: FastNewsUIViewController {
     
     //MARK: - Properties
     
-    let repository = Repository()
+    let repository = Repository(remoteDataSource: RemoteDataSource(),
+                                cacheDataSource: CacheDataSource())
     
     var hotNews: [HotNews] = [HotNews]() {
         didSet {

@@ -38,23 +38,29 @@ class FeedDetailsViewController: FastNewsUIViewController {
         return view
     }
     
+    private func setupObservables() {
+        self.onTryAgainPressed.bind {
+            self.fetchComments()
+        }.disposed(by: disposeBag)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
-        fetchComments(id: hotNewsViewModel?.id ?? "")
+        setupObservables()
+        fetchComments()
     }
     
-    private func fetchComments(id: String) {
+    private func fetchComments() {
         self.displayLoading()
-        
-        repository.getComments(id: id).subscribe() { event in
+        repository.getComments(id: hotNewsViewModel?.id ?? "").subscribe() { event in
             switch event {
                 case .success(let comments):
                     self.removeLoading()
                     self.comments = comments
-                case .error(let error):
-                    print("Error: ", error)
+                case .error:
+                    self.removeLoading()
+                    self.displayErrorDialog()
             }
         }.disposed(by: disposeBag)
     }

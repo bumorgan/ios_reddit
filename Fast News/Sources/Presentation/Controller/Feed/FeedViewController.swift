@@ -35,10 +35,17 @@ class FeedViewController: FastNewsUIViewController {
         return view
     }
     
+    private func setupObservables() {
+        self.onTryAgainPressed.bind {
+            self.fetchHotNews(isFirstPage: true)
+        }.disposed(by: disposeBag)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.accessibilityIdentifier = "feedView"
         navigationItem.title = "Fast News"
+        setupObservables()
         fetchHotNews(isFirstPage: true)
     }
     
@@ -58,8 +65,9 @@ class FeedViewController: FastNewsUIViewController {
                 case .success(let loadedHotNews):
                     self.removeLoading()
                     self.hotNews.append(contentsOf: loadedHotNews)
-                case .error(let error):
-                    print("Error: ", error)
+                case .error:
+                    self.removeLoading()
+                    self.displayErrorDialog()
             }
         }.disposed(by: disposeBag)
     }
